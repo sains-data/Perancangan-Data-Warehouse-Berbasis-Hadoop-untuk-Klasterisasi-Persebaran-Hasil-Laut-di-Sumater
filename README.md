@@ -5,15 +5,31 @@ Proyek ini bertujuan untuk menganalisis data hasil laut dari berbagai kabupaten/
 ---
 
 ## 🚀 Teknologi yang Digunakan
-
-- **Apache Hadoop** – Distributed storage dengan HDFS
-- **Apache Spark** – Pemrosesan data dan ML (KMeans Clustering)
-- **Apache Hive** – Query data dalam HDFS
-- **Python (Folium, Geopandas)** – Visualisasi data spasial
-- **Jupyter Notebook / PySpark Script** – Analisis dan pipeline
-- **GitHub Actions** *(opsional)* – CI/CD pipeline untuk workflow
-
+| **No** | **Teknologi**  | **Kategori**            | **Fungsi Utama**                                                                                                                                     |
+| ------ | -------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1      | Hadoop HDFS    | Storage                 | Menyimpan data mentah (bronze), hasil transformasi (silver), dan agregasi (gold) secara terdistribusi.                                               |
+| 2      | Hadoop YARN    | Resource Management     | Mengatur sumber daya (CPU/RAM) dan menjadwalkan eksekusi job Spark secara terdistribusi.                                                             |
+| 3      | Apache Hive    | Query Engine / Metadata | Menyediakan SQL-like interface (HiveQL) dan metadata management untuk query analitik.                                                                |
+| 4      | Apache Spark   | ETL / Analytics Engine  | Melakukan pembersihan data, transformasi, klasterisasi, dan agregasi batch processing.                                                               |
+| 5      | Hive Metastore | Metadata Store          | Menyimpan skema dan metadata tabel Hive yang digunakan dalam SQL query.                                                                              |
+| 6      | Apache HBase   | NoSQL Database          | Menyimpan dan mengakses data besar secara real-time dengan model kolom lebar, digunakan untuk penyimpanan data hasil transformasi di lapisan Silver. |
+| 7      | Apache Flume   | Data Ingestion          | Mengalirkan data hasil laut dari file eksternal (CSV/API) ke HDFS secara otomatis.                                                                   |
+| 8      | Python Folium  | Visualisasi Spasial     | Menampilkan hasil analisis spasial dalam bentuk peta interaktif berbasis wilayah produksi laut.                                                      |
 ---
+
+## ⚙️ Orkestrasi DAG dengan Apache Airflow
+```plaintext
+dag_export_pipeline:
+├── task_1: fetch_csv_from_source
+├── task_2: load_to_hdfs_bronze
+├── task_3: spark_transform_to_silver
+├── task_4: spark_aggregate_to_gold
+├── task_5: hive_refresh_tables
+├── task_6: metastore_management
+├── task_7: spark_cluster_management
+└── task_8: notify_team_or_export_to_dashboard
+```
+
 
 ## 🧱 Arsitektur Proyek
 
